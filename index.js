@@ -231,11 +231,20 @@ console.log(valueOr({ a: 0 }, "a", 99));
 // that adds 1 to its OWN count and RETURNS the new count.
 // Hint: { count: 0, inc() { this.count++; return this.count; } }  — `this` is the object.
 // your code here
-// function makeCounter(this){
-//   { count: 0, inc() { this.count++; return this.count; } };
-
-// }
-// const c = makeCounter(); console.log(c.inc());
+function makeCounter() {
+  return {
+    count: 0,
+    inc() {
+      this.count++;
+      return this.count;
+    },
+  };
+}
+console.log( makeCounter().count)
+const a = makeCounter(); a.inc();  a.count
+console.log(a.inc())
+const b = makeCounter();
+console.log(b.inc());
 // TEST 1:  makeCounter().count        ->  0
 // TEST 2:  const a = makeCounter(); a.inc(); a.inc();  a.count   ->  2
 // TEST 3:  const b = makeCounter(); b.inc()                       ->  1
@@ -244,8 +253,21 @@ console.log(valueOr({ a: 0 }, "a", 99));
 // Write `makeBank(start)` that RETURNS an object with balance: start and two methods:
 // deposit(n) adds n to the balance, withdraw(n) subtracts n; both RETURN the new balance.
 // your code here
-
-// const acct = makeBank(100); console.log(acct.deposit(50));
+function makeBank(start) {
+  return {
+    balance: start,
+    deposit(n) {
+      this.balance += n;
+      return this;
+    },
+    withdraw(n) {
+      this.balance -= n;
+      return this;
+    },
+  };
+}
+console.log(makeBank(100).deposit(50).balance);
+console.log(makeBank(100).deposit(50).withdraw(30).balance);
 // TEST 1:  makeBank(100).deposit(50)   ->  150
 // TEST 2:  const x = makeBank(100); x.deposit(50); x.withdraw(30); x.balance   ->  120
 // TEST 3:  makeBank(0).balance         ->  0
