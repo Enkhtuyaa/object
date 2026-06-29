@@ -341,18 +341,20 @@ console.log(maxValue({ a: -3, b: -1 }));
 // Write `keyOfMax(obj)` that RETURNS the KEY whose value is largest (first one if tied).
 // Hint: track both bestKey and bestVal as you loop.
 // your code here
-// function keyOfMax(obj) {
-//   let bestKey
-//   let bestVal;
-//   for (const k in obj) {
-//     if (obj[k] > bestKey) {
-//       bestKey = obj[k];
-//       bestKey = k;
-//     }
-//   }
-//   return bestKey;
-// }
-// console.log(keyOfMax({ math: 80, art: 95, gym: 88 }));
+function keyOfMax(obj) {
+  let bestKey = null;
+  let bestVal = -Infinity;
+  for (const k in obj) {
+    if (obj[k] > bestVal) {
+      bestVal = obj[k];
+      bestKey = k;
+    }
+  }
+  return bestKey;
+}
+console.log(keyOfMax({ math: 80, art: 95, gym: 88 }));
+console.log(keyOfMax({ a: 5, b: 9, c: 2 }));
+console.log(keyOfMax({ only: 1 }));
 // TEST 1:  keyOfMax({ math: 80, art: 95, gym: 88 })  ->  "art"
 // TEST 2:  keyOfMax({ a: 5, b: 9, c: 2 })            ->  "b"
 // TEST 3:  keyOfMax({ only: 1 })                     ->  "only"
@@ -421,8 +423,20 @@ console.log(doubleValues({}));
 // times it appears. Hint: counts = {}; for each char, if missing start at 0, then +1.
 //   if (counts[ch] === undefined) counts[ch] = 0;  counts[ch]++;
 // your code here
-
-// console.log(letterCount("hello"));
+function letterCount(word) {
+  let count = {};
+  for (let i = 0; i < word.length; i++) {
+    if (count[word[i]] !== undefined) {
+      count[word[i]] = count[word[i]] + 1;
+    } else {
+      count[word[i]] = 1;
+    }
+  }
+  return count;
+}
+console.log(letterCount("hello"));
+console.log(letterCount("aaa"));
+console.log(letterCount(""));
 // TEST 1:  letterCount("hello")  ->  { h: 1, e: 1, l: 2, o: 1 }
 // TEST 2:  letterCount("aaa")    ->  { a: 3 }
 // TEST 3:  letterCount("")       ->  {}     (empty word, empty object)
@@ -431,8 +445,17 @@ console.log(doubleValues({}));
 // Write `wordLengths(sentence)` that RETURNS an object mapping each word to its length.
 // Hint: sentence.split(" ") gives the words; loop them, set obj[word] = word.length.
 // your code here
-
-// console.log(wordLengths("the cat sat"));
+function wordLengths(sentence) {
+  let words = sentence.split(" ");
+  let obj = {};
+  for (let i = 0; i < words.length; i++) {
+    obj[words[i]] = words[i].length;
+  }
+  return obj;
+}
+console.log(wordLengths("the cat sat"));
+console.log(wordLengths("hi there"));
+console.log(wordLengths("one"));
 // TEST 1:  wordLengths("the cat sat")  ->  { the: 3, cat: 3, sat: 3 }
 // TEST 2:  wordLengths("hi there")     ->  { hi: 2, there: 5 }
 // TEST 3:  wordLengths("one")          ->  { one: 3 }
@@ -442,8 +465,16 @@ console.log(doubleValues({}));
 // each key becomes its value. Assume values are unique strings/numbers.
 // Hint: out = {}; for (const k in obj) out[obj[k]] = k.
 // your code here
-
-// console.log(invert({ a: "x", b: "y" }));
+function invert(obj) {
+  out = {};
+  for (const k in obj) {
+    out[obj[k]] = k;
+  }
+  return out;
+}
+console.log(invert({ a: "x", b: "y" }));
+console.log(invert({ one: 1 }));
+console.log(invert({}));
 // TEST 1:  invert({ a: "x", b: "y" })   ->  { x: "a", y: "b" }
 // TEST 2:  invert({ one: 1 })           ->  { "1": "one" }   (number value becomes a key)
 // TEST 3:  invert({})                   ->  {}
