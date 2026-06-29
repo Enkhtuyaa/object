@@ -127,14 +127,14 @@ console.log(setAge({ age: 5 }, 0).age);
 // Use bracket set: obj[key] = value.
 // your code here
 function addField(obj, key, value) {
-  key = value;
-  return key;
+  obj[key] = value;
+  return obj;
 }
 // console.log(object4.key);
 // console.log(object.value)
-console.log(addField({ name: "Sam" }, "age", 20));
-console.log(addField({}, "x", 5));
-console.log(addField({ a: 1 }, "a", 9));
+console.log(addField({ name: "Sam" }, "age", 20).age);
+console.log(addField({}, "x", 5).x);
+console.log(addField({ a: 1 }, "a", 9).a);
 // TEST 1:  addField({ name: "Sam" }, "age", 20).age   ->  20
 // TEST 2:  addField({}, "x", 5).x                      ->  5
 // TEST 3:  addField({ a: 1 }, "a", 9).a                ->  9     (existing key gets overwritten)
@@ -240,9 +240,11 @@ function makeCounter() {
     },
   };
 }
-console.log( makeCounter().count)
-const a = makeCounter(); a.inc();  a.count
-console.log(a.inc())
+console.log(makeCounter().count);
+const a = makeCounter();
+a.inc();
+a.count;
+console.log(a.inc());
 const b = makeCounter();
 console.log(b.inc());
 // TEST 1:  makeCounter().count        ->  0
@@ -280,8 +282,16 @@ console.log(makeBank(100).deposit(50).withdraw(30).balance);
 // Write `countKeys(obj)` that RETURNS how many keys the object has.
 // Hint: loop `for (const k in obj) count++`  OR  Object.keys(obj).length.
 // your code here
-
-// console.log(countKeys({ a: 1, b: 2, c: 3 }));
+function countKeys(obj) {
+  let count = 0;
+  for (const k in obj) {
+    count++;
+  }
+  return count;
+}
+console.log(countKeys({ a: 1, b: 2, c: 3 }));
+console.log(countKeys({}));
+console.log(countKeys({ x: 5 }));
 // TEST 1:  countKeys({ a: 1, b: 2, c: 3 })  ->  3
 // TEST 2:  countKeys({})                    ->  0
 // TEST 3:  countKeys({ x: 5 })              ->  1
@@ -290,8 +300,16 @@ console.log(makeBank(100).deposit(50).withdraw(30).balance);
 // Write `sumValues(obj)` that RETURNS the sum of all (numeric) values.
 // Hint: total = 0; for (const k in obj) total += obj[k].
 // your code here
-
-// console.log(sumValues({ a: 1, b: 2, c: 3 }));
+function sumValues(obj) {
+  total = 0;
+  for (const k in obj) {
+    total += obj[k];
+  }
+  return total;
+}
+console.log(sumValues({ a: 1, b: 2, c: 3 }));
+console.log(sumValues({ x: 10 }));
+console.log(sumValues({}));
 // TEST 1:  sumValues({ a: 1, b: 2, c: 3 })  ->  6
 // TEST 2:  sumValues({ x: 10 })             ->  10
 // TEST 3:  sumValues({})                    ->  0
@@ -300,8 +318,21 @@ console.log(makeBank(100).deposit(50).withdraw(30).balance);
 // Write `maxValue(obj)` that RETURNS the largest value. Assume at least one key.
 // Hint: start `best` from -Infinity, then compare each value.
 // your code here
+function maxValue(obj) {
+  // return Math.max(...Object.values(obj));
+  let best = -Infinity;
 
-// console.log(maxValue({ a: 5, b: 9, c: 2 }));
+  for (const k in obj) {
+    if (obj[k] > best) {
+      best = obj[k];
+    }
+  }
+  return best;
+}
+console.log(maxValue({ a: 5, b: 9, c: 2 }));
+console.log(maxValue({ x: 7 }));
+console.log(maxValue({ a: -3, b: -1 }));
+
 // TEST 1:  maxValue({ a: 5, b: 9, c: 2 })     ->  9
 // TEST 2:  maxValue({ x: 7 })                 ->  7
 // TEST 3:  maxValue({ a: -3, b: -1 })         ->  -1
@@ -310,7 +341,17 @@ console.log(makeBank(100).deposit(50).withdraw(30).balance);
 // Write `keyOfMax(obj)` that RETURNS the KEY whose value is largest (first one if tied).
 // Hint: track both bestKey and bestVal as you loop.
 // your code here
-
+// function keyOfMax(obj) {
+//   let bestKey
+//   let bestVal;
+//   for (const k in obj) {
+//     if (obj[k] > bestKey) {
+//       bestKey = obj[k];
+//       bestKey = k;
+//     }
+//   }
+//   return bestKey;
+// }
 // console.log(keyOfMax({ math: 80, art: 95, gym: 88 }));
 // TEST 1:  keyOfMax({ math: 80, art: 95, gym: 88 })  ->  "art"
 // TEST 2:  keyOfMax({ a: 5, b: 9, c: 2 })            ->  "b"
@@ -320,8 +361,18 @@ console.log(makeBank(100).deposit(50).withdraw(30).balance);
 // Write `averageValue(obj)` that RETURNS the mean of the values (sum divided by count).
 // Hint: total and count together in one loop, then total / count.
 // your code here
-
-// console.log(averageValue({ a: 2, b: 4, c: 6 }));
+function averageValue(obj) {
+  let total = 0;
+  let count = 0;
+  for (const k in obj) {
+    total += obj[k];
+    count++;
+  }
+  return total / count;
+}
+console.log(averageValue({ a: 2, b: 4, c: 6 }));
+console.log(averageValue({ x: 10 }));
+console.log(averageValue({ a: 1, b: 2 }));
 // TEST 1:  averageValue({ a: 2, b: 4, c: 6 })  ->  4
 // TEST 2:  averageValue({ x: 10 })             ->  10
 // TEST 3:  averageValue({ a: 1, b: 2 })        ->  1.5
@@ -331,8 +382,16 @@ console.log(makeBank(100).deposit(50).withdraw(30).balance);
 // value times 2. The original must stay untouched.
 // Hint: out = {}; for (const k in obj) out[k] = obj[k] * 2.
 // your code here
-
-// console.log(doubleValues({ a: 1, b: 2 }));
+function doubleValues(obj) {
+  out = {};
+  for (const k in obj) {
+    out[k] = obj[k] * 2;
+  }
+  return out;
+}
+console.log(doubleValues({ a: 1, b: 2 }));
+console.log(doubleValues({ x: 0 }));
+console.log(doubleValues({}));
 // TEST 1:  doubleValues({ a: 1, b: 2 })  ->  { a: 2, b: 4 }
 // TEST 2:  doubleValues({ x: 0 })        ->  { x: 0 }
 // TEST 3:  doubleValues({})              ->  {}
@@ -341,7 +400,11 @@ console.log(makeBank(100).deposit(50).withdraw(30).balance);
 // Write `toPairs(obj)` that RETURNS "key=value" for each pair, joined by ", ".
 // Hint: build a string; add ", " before every pair except the first.
 // your code here
+// function toPairs(obj){
+//   let pair = ""
+//  let pair = ", "
 
+// }
 // console.log(toPairs({ a: 1, b: 2 }));
 // TEST 1:  toPairs({ a: 1, b: 2 })  ->  "a=1, b=2"
 // TEST 2:  toPairs({ x: 5 })        ->  "x=5"
