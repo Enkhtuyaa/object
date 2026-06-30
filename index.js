@@ -487,8 +487,13 @@ console.log(invert({}));
 // Write `copyObject(obj)` that RETURNS a NEW object with the same keys and values.
 // Changing the copy must NOT change the original. Hint: { ...obj }.
 // your code here
-
-// console.log(copyObject({ a: 1, b: 2 }));
+function copyObject(obj) {
+  return { ...obj };
+}
+console.log(copyObject({ a: 1, b: 2 }).a);
+const o = { a: 1 };
+console.log(copyObject(o) === o);
+console.log(copyObject({}));
 // TEST 1:  copyObject({ a: 1, b: 2 }).a   ->  1
 // TEST 2:  const o = { a: 1 }; copyObject(o) === o   ->  false   (a NEW object, not the same one)
 // TEST 3:  copyObject({})                 ->  {}
@@ -498,8 +503,14 @@ console.log(invert({}));
 // the original untouched. (Contrast removeField in ex 6, which mutates.)
 // Hint: copyObject first, then delete the key from the copy.
 // your code here
-
-// console.log(omitField({ a: 1, b: 2 }, "a"));
+function omitField(obj, key) {
+  delete obj[key];
+  return obj;
+}
+console.log(omitField({ a: 1, b: 2 }, "a"));
+const o1 = { a: 1, b: 2 };
+console.log(omitField(o1) !== "a");
+console.log(omitField({ a: 1 }, "a"));
 // TEST 1:  omitField({ a: 1, b: 2 }, "a")                  ->  { b: 2 }
 // TEST 2:  const o = { a: 1, b: 2 }; omitField(o, "a"); "a" in o   ->  true   (original kept)
 // TEST 3:  omitField({ a: 1 }, "a")                        ->  {}
@@ -516,7 +527,14 @@ console.log(invert({}));
 // If none, RETURN "". Hint: count every char into an object, then walk the word again
 // and return the first char whose count is 1.
 // your code here
-
+// function firstUniqueChar(word) {
+//   let firstUniqueChar = 0;
+//   for (let i = 0; i < word1.length; i++) {
+//     if(firstUniqueChar && word1)
+// return firstUniqueChar
+//   }
+//   return ""
+// }
 // console.log(firstUniqueChar("leetcode"));
 // EXAMPLE 1:  firstUniqueChar("leetcode")  ->  "l"
 // EXAMPLE 2:  firstUniqueChar("swiss")     ->  "w"
@@ -527,8 +545,14 @@ console.log(invert({}));
 // counts). Hint: if lengths differ -> false; count a into an object; walk b subtracting;
 // any count going negative or a missing key -> false.
 // your code here
+// function areAnagrams(a, b) {
+//   if () {
+//     return true;
+//   } 
+//   }
 
 // console.log(areAnagrams("listen", "silent"));
+// console.log(areAnagrams("hello", "world"));
 // EXAMPLE 1:  areAnagrams("listen", "silent")  ->  true
 // EXAMPLE 2:  areAnagrams("hello", "world")    ->  false
 // EXAMPLE 3:  areAnagrams("a", "aa")           ->  false   (different lengths)
